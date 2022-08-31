@@ -5,7 +5,7 @@ export interface Ticket {
     eventId: number;
     enrollementId: number;
     isPresential: boolean;
-    haveHotel: boolean;
+    hasHotel: boolean;
 }
 
 export async function createTicket(ticket: Ticket) {

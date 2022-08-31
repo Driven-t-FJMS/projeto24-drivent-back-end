@@ -41,19 +41,6 @@ model Event {
   Ticket             Ticket[]
 }
 
-model Ticket {
-  id            Int        @id @default(autoincrement())
-  eventId       Int
-  Event         Event      @relation(fields: [eventId], references: [id])
-  enrollementId Int
-  Enrollment    Enrollment @relation(fields: [enrollementId], references: [id])
-  isPresential  Boolean
-  haveHotel     Boolean
-  isPaid        Boolean?   @default(false)
-
-  @@unique([eventId, enrollementId])
-}
-
 model Enrollment {
   id        Int       @id @default(autoincrement())
   name      String    @db.VarChar(255)
@@ -66,6 +53,19 @@ model Enrollment {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Ticket    Ticket[]
+}
+
+model Ticket {
+  id            Int        @id @default(autoincrement())
+  eventId       Int
+  Event         Event      @relation(fields: [eventId], references: [id])
+  enrollementId Int
+  Enrollment    Enrollment @relation(fields: [enrollementId], references: [id])
+  isPresential  Boolean
+  hasHotel      Boolean
+  isPaid        Boolean?   @default(false)
+
+  @@unique([eventId, enrollementId])
 }
 
 model Address {

@@ -1,11 +1,14 @@
 import Joi from 'joi';
 
-const ticketSchema = Joi.object({
+export const ticketSchema = Joi.object({
     eventId: Joi.number().required(),
     enrollementId: Joi.number().required(),
     isPresential: Joi.boolean().required(),
-    haveHotel: Joi.boolean().required(),
-    ispaid: Joi.boolean()
+    hasHotel: Joi.boolean().required(),
 });
 
-export default ticketSchema;
+export const updateTicketSchema = Joi.object({
+    eventId: Joi.number().required(),
+    enrollementId: Joi.number().required(),
+});
+
