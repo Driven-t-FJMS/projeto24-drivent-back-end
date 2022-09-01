@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import bcrypt from 'bcrypt';
 import { Request } from 'express';
 import jwt from 'jsonwebtoken';
@@ -83,7 +82,6 @@ async function fetchUser(token: string | string[]) {
 
 async function createUserAndSession(email: string, token: string) {
   await userService.canEnrollOrFail();
-  await userService.validateUniqueEmailOrFail(email);
   await createUserOrNot(email);
 
   const user = await getUserOrFailAuthGitHub(email);
