@@ -38,6 +38,7 @@ model Event {
   endsAt             DateTime
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
+  Ticket             Ticket[]
 }
 
 model Enrollment {
@@ -51,6 +52,20 @@ model Enrollment {
   Address   Address[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  Ticket    Ticket[]
+}
+
+model Ticket {
+  id            Int        @id @default(autoincrement())
+  eventId       Int
+  Event         Event      @relation(fields: [eventId], references: [id])
+  enrollementId Int
+  Enrollment    Enrollment @relation(fields: [enrollementId], references: [id])
+  isPresential  Boolean
+  hasHotel      Boolean
+  isPaid        Boolean?   @default(false)
+
+  @@unique([eventId, enrollementId])
 }
 
 model Address {
