@@ -13,7 +13,7 @@ datasource db {
 model User {
   id         Int          @id @default(autoincrement())
   email      String       @unique @db.VarChar(255)
-  password   String?       @db.VarChar(255)
+  password   String?      @db.VarChar(255)
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   Session    Session[]
@@ -30,29 +30,31 @@ model Session {
 }
 
 model Event {
-  id                 Int      @id @default(autoincrement())
-  title              String   @db.VarChar(255)
-  backgroundImageUrl String   @db.VarChar(255)
-  logoImageUrl       String   @db.VarChar(255)
+  id                 Int        @id @default(autoincrement())
+  title              String     @db.VarChar(255)
+  backgroundImageUrl String     @db.VarChar(255)
+  logoImageUrl       String     @db.VarChar(255)
   startsAt           DateTime
   endsAt             DateTime
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
   Ticket             Ticket[]
+  Activity           Activity[]
 }
 
 model Enrollment {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(255)
-  cpf       String    @db.VarChar(255)
-  birthday  DateTime
-  phone     String    @db.VarChar(255)
-  userId    Int       @unique
-  User      User      @relation(fields: [userId], references: [id])
-  Address   Address[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Ticket    Ticket[]
+  id             Int              @id @default(autoincrement())
+  name           String           @db.VarChar(255)
+  cpf            String           @db.VarChar(255)
+  birthday       DateTime
+  phone          String           @db.VarChar(255)
+  userId         Int              @unique
+  User           User             @relation(fields: [userId], references: [id])
+  Address        Address[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  Ticket         Ticket[]
+  UserActivities UserActivities[]
 }
 
 model Ticket {
@@ -66,6 +68,29 @@ model Ticket {
   isPaid        Boolean?   @default(false)
 
   @@unique([eventId, enrollementId])
+}
+
+model Activity {
+  id             Int              @id @default(autoincrement())
+  eventId        Int
+  Event          Event            @relation(fields: [eventId], references: [id])
+  title          String           @db.VarChar(255)
+  startsAt       DateTime
+  endsAt         DateTime
+  location       String           @db.VarChar(255)
+  vacancy        Int
+  date           DateTime
+  UserActivities UserActivities[]
+}
+
+model UserActivities {
+  id            Int        @id @default(autoincrement())
+  enrollementId Int
+  Enrollment    Enrollment @relation(fields: [enrollementId], references: [id])
+  activityId    Int
+  Activity      Activity   @relation(fields: [activityId], references: [id])
+
+  @@unique([enrollementId, activityId])
 }
 
 model Address {
