@@ -55,9 +55,9 @@ async function codeForAccessToken(req: Request) {
   const params = {
     code,
     grant_type: 'authorization_code',
-    redirect_uri: process.env.GITHUB_REDIRECT,
-    client_id: process.env.GITHUB_CLIENT_ID,
-    client_secret: process.env.GITHUB_CLIENT_SECRET,
+    redirect_uri: process.env.REDIRECT_URI,
+    client_id: process.env.CLIENT_ID,
+    client_secret: process.env.CLIENT_SECRET,
   };
 
   const { data } = await axios.post(GITHUB_ACCESS_TOKEN_URL, params, {
