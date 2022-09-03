@@ -66,33 +66,30 @@ async function codeForAccessToken(req: Request) {
     },
   });
 
-  const parsedData = qs.parse(data);
-  return parsedData.access_token;
+  const dataObject = qs.parse(data);
+  return dataObject.access_token;
 }
 
 async function fetchUser(token: string | string[]) {
-  const response = await axios.get('https://api.github.com/user', {
+  const { data } = await axios.get('https://api.github.com/user', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  return response.data;
+  return data;
 }
 
-async function createUserAndSession(email: string, token: string) {
+async function createUserAndSession(email: string) {
   await userService.canEnrollOrFail();
   await createUserOrNot(email);
 
   const user = await getUserOrFailAuthGitHub(email);
-  await sessionRepository.create({
-    token,
-    userId: user.id,
-  });
+  const tokenJWT = await createSession(user.id);
 
   return {
     user,
-    token,
+    token: tokenJWT,
   };
 }
 

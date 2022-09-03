@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
+import * as jwt from 'jsonwebtoken';
 
 import { unauthorizedError } from '@/errors';
 import sessionRepository from '@/repositories/session-repository';
@@ -12,11 +13,12 @@ export async function authenticateToken(req: AuthenticatedRequest, res: Response
   if (!token) return generateUnauthorizedResponse(res);
 
   try {
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload;
+
     const session = await sessionRepository.findSession(token);
     if (!session) return generateUnauthorizedResponse(res);
 
-    req.userId = session.userId;
-
+    req.userId = userId;
     return next();
   } catch (err) {
     return generateUnauthorizedResponse(res);
