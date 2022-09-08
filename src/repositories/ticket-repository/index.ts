@@ -1,5 +1,4 @@
 import { prisma } from '@/config';
-import { Prisma } from '@prisma/client';
 
 export interface Ticket {
     eventId: number;
