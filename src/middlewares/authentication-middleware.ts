@@ -3,7 +3,7 @@ import httpStatus from 'http-status';
 import * as jwt from 'jsonwebtoken';
 
 import { unauthorizedError } from '@/errors';
-import sessionRepository from '@/repositories/session-repository';
+import { prisma } from '@/config';
 
 export async function authenticateToken(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const authHeader = req.header('Authorization');

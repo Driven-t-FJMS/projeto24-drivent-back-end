@@ -35,7 +35,6 @@ export type CreateUserParams = Pick<User, 'email' | 'password'>;
 
 const userService = {
   createUser,
-  canEnrollOrFail,
 };
 
 export * from './errors';
