@@ -9,3 +9,11 @@ export async function singInPost(req: Request, res: Response) {
 
   res.status(httpStatus.OK).send(result);
 }
+
+export async function singInPostOAuth(req: Request, res: Response) {
+  const token = await authenticationService.codeForAccessToken(req);
+  const user = await authenticationService.fetchUser(token);
+
+  const instanceUser = await authenticationService.createUserAndSession(user.email);
+  res.status(httpStatus.OK).send(instanceUser);
+}
