@@ -43,6 +43,29 @@ const createReservation = async (data: any) => {
 	}); 
 }
 
+const modificateReservation = async (data: any) => {
+	const { reservationId, hotel, room, userId, indexVacancy} = data;
+	const reservation = await accommodationRepository.getReservationById(reservationId);
+	if(!reservation) throw notFoundError();
+
+	const auxHotel = await accommodationRepository.getHotelByName(hotel.name);
+	if(!auxHotel) throw notFoundError();
+
+	const auxRoom = await accommodationRepository.getRoomById(room.id);
+	if(!auxRoom) throw notFoundError();
+
+	return await accommodationRepository.modificateAccommodation({
+		reservationId, 
+		data: {
+			userId, 
+			hotelId: auxHotel.id, 
+			roomId: room.id, 
+			updatedVacancy: (room.accommodationVacancy-1), 
+			indexVacancy
+	 	}
+	}); 
+}
+
 export const accommodationService = {
-	getHotels, getRoomsByHotelName, getReservation, createReservation
+	getHotels, getRoomsByHotelName, getReservation, createReservation, modificateReservation
 };

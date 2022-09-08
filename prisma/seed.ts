@@ -46,16 +46,7 @@ const seedRoom = async () => {
 		for (let i = 0; i < 3; i++) {
 			for (let j = 0; j < 6; j++) {
 				let data = { number: 100 + (j + 1), hotelId: (i + 1), accommodationVacancy: 0 };
-				if ((j % 2 === 0 && (j % 3 !== 0))) {
-					data = { ...data, accommodationVacancy: 1 };
-				}
-				else if ((j % 2 !== 0 && (j % 3 === 0))) {
-					data = { ...data, accommodationVacancy: 2 };
-				}
-				else if (((j % 2 === 0 && (j % 3 === 0)) || (j === 5))) {
-					data = { ...data, accommodationVacancy: 3 };
-				}
-				await prisma.room.create({ data });
+				await prisma.room.create({ data: {...data, accommodationVacancy: (i+1)} });
 			}
 		}
 	}

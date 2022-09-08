@@ -27,3 +27,12 @@ export const createReservationController = async (req: Request, res: Response) =
 	console.log(body);
 	res.sendStatus(201);
 }
+
+export const modificateReservationController = async (req: Request, res: Response) => {
+	//const { userId } = res.locals;
+	const userId = 1;
+	const { body } = req;
+	//await accommodationService.modificateReservation({...body, userId});
+	console.log(body);
+	res.sendStatus(200);
+}
