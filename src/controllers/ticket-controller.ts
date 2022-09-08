@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Request, Response } from 'express';
 
 import * as ticketService from '@/services/ticket-service';
