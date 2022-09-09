@@ -3,8 +3,7 @@ import { Request, Response } from 'express';
 import { accommodationService } from '@/services/accommodation-service';
 
 export const getReservationController = async (req: Request, res: Response) => {
-  //const { userId } = res.locals;
-  const userId = 1;
+  const { userId } = res.locals;
   const reservation = await accommodationService.getReservation(userId);
   res.status(200).send(reservation);
 };
@@ -21,19 +20,15 @@ export const getRoomsController = async (req: Request, res: Response) => {
 };
 
 export const createReservationController = async (req: Request, res: Response) => {
-  //const { userId } = res.locals;
-  const userId = 1;
+  const { userId } = res.locals;
   const { body } = req;
-  //await accommodationService.createReservation({ ...body, userId });
-  console.log(body);
+  await accommodationService.createReservation({ ...body, userId });
   res.sendStatus(201);
 };
 
 export const modificateReservationController = async (req: Request, res: Response) => {
-  //const { userId } = res.locals;
-  const userId = 1;
+  const { userId } = res.locals;
   const { body } = req;
-  //await accommodationService.modificateReservation({...body, userId});
-  console.log(body);
+  await accommodationService.modificateReservation({ ...body, userId });
   res.sendStatus(200);
 };
