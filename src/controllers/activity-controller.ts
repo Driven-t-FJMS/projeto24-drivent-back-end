@@ -11,17 +11,17 @@ export async function registerToActivity(req: Request, res: Response) {
 }
 
 export async function getUserActivities(req: Request, res: Response) {
-    const { enrollementId, eventId } = req.body;
-    
-    const activities = await activityService.getUserActivities(enrollementId, eventId);
-    
-    return res.status(httpStatus.OK).send(activities);
+  const { enrollementId, eventId } = req.body;
+
+  const activities = await activityService.getUserActivities(enrollementId, eventId);
+
+  return res.status(httpStatus.OK).send(activities);
 }
 
 export async function getActivitiesByEventId(req: Request, res: Response) {
-    const { eventId } = req.params;
-    
-    const activities = await activityService.getActivitiesByEventId(Number(eventId));
-    
-    return res.status(httpStatus.OK).send(activities);
+  const { eventId } = req.params;
+
+  const activities = await activityService.getActivitiesByEventId(Number(eventId));
+
+  return res.status(httpStatus.OK).send(activities);
 }

@@ -18,6 +18,7 @@ model User {
   updatedAt  DateTime     @updatedAt
   Session    Session[]
   Enrollment Enrollment[]
+  reserve    Reserves[]
 }
 
 model Session {
@@ -106,4 +107,39 @@ model Address {
   Enrollment    Enrollment @relation(fields: [enrollmentId], references: [id])
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
+}
+
+model Hotel {
+  id                Int        @id @default(autoincrement())
+  name              String     @unique
+  image             String
+  accommodationType String
+  vacancy           Int
+  created_at        DateTime   @default(now())
+  updated_at        DateTime   @updatedAt
+  room              Room[]
+  reserve           Reserves[]
+}
+
+model Room {
+  id                   Int        @id @default(autoincrement())
+  number               Int
+  accommodationVacancy Int
+  hotelId              Int
+  created_at           DateTime   @default(now())
+  updated_at           DateTime   @updatedAt
+  hotel                Hotel      @relation(fields: [hotelId], references: [id])
+  reserve              Reserves[]
+}
+
+model Reserves {
+  id              Int     @id @default(autoincrement())
+  userId          Int
+  hotelId         Int
+  roomId          Int
+  selectedVacancy Int
+  isActive        Boolean @default(true)
+  user            User    @relation(fields: [userId], references: [id])
+  hotel           Hotel   @relation(fields: [hotelId], references: [id])
+  room            Room    @relation(fields: [roomId], references: [id])
 }
