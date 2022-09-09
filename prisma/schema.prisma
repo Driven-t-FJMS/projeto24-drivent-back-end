@@ -2,144 +2,144 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
-  email      String       @unique @db.VarChar(255)
-  password   String?      @db.VarChar(255)
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  Session    Session[]
-  Enrollment Enrollment[]
-	reserve Reserves[]
+    id         Int          @id @default(autoincrement())
+    email      String       @unique @db.VarChar(255)
+    password   String?      @db.VarChar(255)
+    createdAt  DateTime     @default(now())
+    updatedAt  DateTime     @updatedAt
+    Session    Session[]
+    Enrollment Enrollment[]
+    reserve    Reserves[]
 }
 
 model Session {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  User      User     @relation(fields: [userId], references: [id])
-  token     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    id        Int      @id @default(autoincrement())
+    userId    Int
+    User      User     @relation(fields: [userId], references: [id])
+    token     String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Event {
-  id                 Int        @id @default(autoincrement())
-  title              String     @db.VarChar(255)
-  backgroundImageUrl String     @db.VarChar(255)
-  logoImageUrl       String     @db.VarChar(255)
-  startsAt           DateTime
-  endsAt             DateTime
-  createdAt          DateTime   @default(now())
-  updatedAt          DateTime   @updatedAt
-  Ticket             Ticket[]
-  Activity           Activity[]
+    id                 Int        @id @default(autoincrement())
+    title              String     @db.VarChar(255)
+    backgroundImageUrl String     @db.VarChar(255)
+    logoImageUrl       String     @db.VarChar(255)
+    startsAt           DateTime
+    endsAt             DateTime
+    createdAt          DateTime   @default(now())
+    updatedAt          DateTime   @updatedAt
+    Ticket             Ticket[]
+    Activity           Activity[]
 }
 
 model Enrollment {
-  id             Int              @id @default(autoincrement())
-  name           String           @db.VarChar(255)
-  cpf            String           @db.VarChar(255)
-  birthday       DateTime
-  phone          String           @db.VarChar(255)
-  userId         Int              @unique
-  User           User             @relation(fields: [userId], references: [id])
-  Address        Address[]
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  Ticket         Ticket[]
-  UserActivities UserActivities[]
+    id             Int              @id @default(autoincrement())
+    name           String           @db.VarChar(255)
+    cpf            String           @db.VarChar(255)
+    birthday       DateTime
+    phone          String           @db.VarChar(255)
+    userId         Int              @unique
+    User           User             @relation(fields: [userId], references: [id])
+    Address        Address[]
+    createdAt      DateTime         @default(now())
+    updatedAt      DateTime         @updatedAt
+    Ticket         Ticket[]
+    UserActivities UserActivities[]
 }
 
 model Ticket {
-  id            Int        @id @default(autoincrement())
-  eventId       Int
-  Event         Event      @relation(fields: [eventId], references: [id])
-  enrollementId Int
-  Enrollment    Enrollment @relation(fields: [enrollementId], references: [id])
-  isPresential  Boolean
-  hasHotel      Boolean
-  isPaid        Boolean?   @default(false)
+    id            Int        @id @default(autoincrement())
+    eventId       Int
+    Event         Event      @relation(fields: [eventId], references: [id])
+    enrollementId Int
+    Enrollment    Enrollment @relation(fields: [enrollementId], references: [id])
+    isPresential  Boolean
+    hasHotel      Boolean
+    isPaid        Boolean?   @default(false)
 
-  @@unique([eventId, enrollementId])
+    @@unique([eventId, enrollementId])
 }
 
 model Activity {
-  id             Int              @id @default(autoincrement())
-  eventId        Int
-  Event          Event            @relation(fields: [eventId], references: [id])
-  title          String           @db.VarChar(255)
-  startsAt       Int
-  endsAt         Int
-  location       String           @db.VarChar(255)
-  vacancy        Int
-  date           DateTime
-  UserActivities UserActivities[]
+    id             Int              @id @default(autoincrement())
+    eventId        Int
+    Event          Event            @relation(fields: [eventId], references: [id])
+    title          String           @db.VarChar(255)
+    startsAt       Int
+    endsAt         Int
+    location       String           @db.VarChar(255)
+    vacancy        Int
+    date           DateTime
+    UserActivities UserActivities[]
 }
 
 model UserActivities {
-  id            Int        @id @default(autoincrement())
-  enrollementId Int
-  Enrollment    Enrollment @relation(fields: [enrollementId], references: [id])
-  activityId    Int
-  Activity      Activity   @relation(fields: [activityId], references: [id])
+    id            Int        @id @default(autoincrement())
+    enrollementId Int
+    Enrollment    Enrollment @relation(fields: [enrollementId], references: [id])
+    activityId    Int
+    Activity      Activity   @relation(fields: [activityId], references: [id])
 
-  @@unique([enrollementId, activityId])
+    @@unique([enrollementId, activityId])
 }
 
 model Address {
-  id            Int        @id @default(autoincrement())
-  cep           String     @db.VarChar(255)
-  street        String     @db.VarChar(255)
-  city          String     @db.VarChar(255)
-  state         String     @db.VarChar(255)
-  number        String     @db.VarChar(255)
-  neighborhood  String     @db.VarChar(255)
-  addressDetail String?    @db.VarChar(255)
-  enrollmentId  Int        @unique
-  Enrollment    Enrollment @relation(fields: [enrollmentId], references: [id])
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+    id            Int        @id @default(autoincrement())
+    cep           String     @db.VarChar(255)
+    street        String     @db.VarChar(255)
+    city          String     @db.VarChar(255)
+    state         String     @db.VarChar(255)
+    number        String     @db.VarChar(255)
+    neighborhood  String     @db.VarChar(255)
+    addressDetail String?    @db.VarChar(255)
+    enrollmentId  Int        @unique
+    Enrollment    Enrollment @relation(fields: [enrollmentId], references: [id])
+    createdAt     DateTime   @default(now())
+    updatedAt     DateTime   @updatedAt
 }
 
 model Hotel {
-	id Int @id @default(autoincrement())
-	name String @unique
-	image String
-	accommodationType String
-	vacancy Int
-	created_at DateTime @default(now())
-	updated_at DateTime @updatedAt
-	room Room[]
-	reserve Reserves[]
+    id                Int        @id @default(autoincrement())
+    name              String     @unique
+    image             String
+    accommodationType String
+    vacancy           Int
+    created_at        DateTime   @default(now())
+    updated_at        DateTime   @updatedAt
+    room              Room[]
+    reserve           Reserves[]
 }
 
 model Room {
-	id Int @id @default(autoincrement())
-	number Int
-	accommodationVacancy Int
-	hotelId Int
-	created_at DateTime @default(now())
-	updated_at DateTime @updatedAt
-	hotel Hotel @relation(fields: [hotelId], references: [id])
-	reserve Reserves[]
+    id                   Int        @id @default(autoincrement())
+    number               Int
+    accommodationVacancy Int
+    hotelId              Int
+    created_at           DateTime   @default(now())
+    updated_at           DateTime   @updatedAt
+    hotel                Hotel      @relation(fields: [hotelId], references: [id])
+    reserve              Reserves[]
 }
 
 model Reserves {
-	id Int @id @default(autoincrement())
-	userId Int
-	hotelId Int
-	roomId Int
-	selectedVacancy Int
-	isActive Boolean @default(true)
-	user User @relation(fields: [userId], references: [id])
-	hotel Hotel @relation(fields: [hotelId], references: [id])
-	room Room @relation(fields: [roomId], references: [id])
+    id              Int     @id @default(autoincrement())
+    userId          Int
+    hotelId         Int
+    roomId          Int
+    selectedVacancy Int
+    isActive        Boolean @default(true)
+    user            User    @relation(fields: [userId], references: [id])
+    hotel           Hotel   @relation(fields: [hotelId], references: [id])
+    room            Room    @relation(fields: [roomId], references: [id])
 }
