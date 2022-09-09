@@ -10,7 +10,7 @@ export async function registerToActivity(enrollementId: number, activityId: numb
     const userActivity = await activityRepository.findUserActivity(enrollementId, activityId);   
     if (userActivity) throw conflictError("User already registered to activity");
 
-    await activityRepository.decreaseActivityVacancy(activityId, activity.vacancy);
+    await activityRepository.decreaseActivityVacancy(activityId, 1);
 
     return await activityRepository.registerToActivity(enrollementId, activityId);
 }

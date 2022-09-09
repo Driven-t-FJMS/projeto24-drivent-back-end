@@ -20,15 +20,12 @@ export function findActivity(activityId: number) {
 }
 
 export function findUserActivies(enrollementId: number, eventId: number) {
-    /*return prisma.userActivities.findMany({
+    return prisma.userActivities.findMany({
         where: {
             enrollementId,
         },
-        include: {
-            Activity: {},
-        },
-    });*/
-    return prisma.activity.findMany({
+    });
+    /*return prisma.activity.findMany({
         where: {
             eventId,
         },
@@ -39,7 +36,7 @@ export function findUserActivies(enrollementId: number, eventId: number) {
                 },
             },
         },
-    });
+    });*/
 }
 
 export function findUserActivity(enrollementId: number, activityId: number) {
