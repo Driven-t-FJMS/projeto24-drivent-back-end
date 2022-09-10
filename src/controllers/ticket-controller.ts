@@ -17,7 +17,6 @@ export async function findTicketByEnrollementId(req: Request, res: Response) {
   const { enrollementId, eventId } = req.body;
 
   const ticket = await ticketService.findTicketByEnrollementId(enrollementId, eventId);
-  console.log(ticket);
   return res.status(httpStatus.OK).send(ticket);
 }
 

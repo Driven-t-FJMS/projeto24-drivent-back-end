@@ -36,6 +36,27 @@ export function findUserActivity(enrollementId: number, activityId: number) {
   });
 }
 
+export function register(enrollementId: number, activityId: number) {
+  return prisma.$transaction([
+    prisma.userActivities.create({
+      data: {
+        enrollementId,
+        activityId,
+      },
+    }),
+    prisma.activity.update({
+      where: {
+        id: activityId,
+      },
+      data: {
+        vacancy: {
+          decrement: 1,
+        },
+      },
+    })
+  ])
+}
+
 export function registerToActivity(enrollementId: number, activityId: number) {
   return prisma.userActivities.create({
     data: {

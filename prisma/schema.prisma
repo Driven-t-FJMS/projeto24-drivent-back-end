@@ -82,6 +82,8 @@ model Activity {
   vacancy        Int
   date           DateTime
   UserActivities UserActivities[]
+
+  @@index([date(sort: Asc)])
 }
 
 model UserActivities {
@@ -130,6 +132,8 @@ model Room {
   updated_at           DateTime   @updatedAt
   hotel                Hotel      @relation(fields: [hotelId], references: [id])
   reserve              Reserves[]
+
+  @@index([hotelId])
 }
 
 model Reserves {
